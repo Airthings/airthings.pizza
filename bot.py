@@ -9,8 +9,7 @@ import base64
 from slackclient import SlackClient
 from time import sleep
 
-pizza_channel_id = 'C2NC8DBN1'
-
+pizza_channel_id = os.environ["SLACK_PIZZA_CHANNEL_ID"]
 slack_token = os.environ["SLACK_API_TOKEN"]
 sc = SlackClient(slack_token)
 
