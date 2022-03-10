@@ -16,7 +16,7 @@ HOURS_BETWEEN_REMINDERS = 4
 
 BUTTONS_ATTACHMENT = [
     {
-        "fallback": "Det funket ikke å svare :/",
+        "fallback": "Answering not working :/",
         "callback_id": "rsvp",
         "color": "#3AA3E3",
         "attachment_type": "default",
@@ -55,7 +55,7 @@ def invite_if_needed():
     db.save_invitations(users_to_invite, event_id)
 
     for user_id in users_to_invite:
-        slack.send_slack_message(user_id, "Du er invitert til 🍕 på %s, %s. Pls svar innen %d timer 🙏. Kan du?" %
+        slack.send_slack_message(user_id, "You are invited for 🍕 at %s, %s. Pls respond within %d hours 🙏. Can you join?" %
                                  (place, timestamp.strftime("%A %d. %B kl %H:%M"), REPLY_DEADLINE_IN_HOURS), BUTTONS_ATTACHMENT)
         print("%s was invited to event on %s" % (user_id, timestamp))
 
@@ -66,7 +66,7 @@ def send_reminders():
         slack_id, invited_at, reminded_at = invitation
         remind_timestamp = datetime.now(pytz.utc) + timedelta(hours=-HOURS_BETWEEN_REMINDERS)
         if(reminded_at < remind_timestamp):
-            slack.send_slack_message(slack_id, "Hei du! Jeg hørte ikke noe mer? Er du gira? (ja/nei)")
+            slack.send_slack_message(slack_id, "Hi! I have not heard from you? Are you in? (yes/no)")
             db.update_reminded_at(slack_id)
             print("%s was reminded about an event." % slack_id)
 
@@ -80,7 +80,7 @@ def finalize_event_if_complete():
         slack_ids = ['<@%s>' % user for user in db.get_attending_users(event_id)]
         db.mark_event_as_finalized(event_id)
         ids_string = ", ".join(slack_ids)
-        slack.send_slack_message('#pizza', "Halloi! %s! Dere skal spise 🍕 på %s, %s. %s booker bord, og %s legger ut for maten. Blank betaler!" % (ids_string, place, timestamp.strftime("%A %d. %B kl %H:%M"), slack_ids[0], slack_ids[1]))
+        slack.send_slack_message('#pizza', "Halloi! %s! You will be having 🍕 at %s, %s. %s books the table, and %s will expence the food. Airthings covers the 🍕!" % (ids_string, place, timestamp.strftime("%A %d. %B kl %H:%M"), slack_ids[0], slack_ids[1]))
 
 def auto_reply():
     users_that_did_not_reply = db.auto_reply_after_deadline(REPLY_DEADLINE_IN_HOURS)
@@ -88,7 +88,7 @@ def auto_reply():
        return
 
     for user_id in users_that_did_not_reply:
-        slack.send_slack_message(user_id, "Neivel, da antar jeg du ikke kan/gidder. Håper du blir med neste gang! 🤞")
+        slack.send_slack_message(user_id, "Ok, I assume you are not available. Hope you can join next time! 🤞")
         print("%s didn't answer. Setting RSVP to not attending.")
 
 def save_image(cloudinary_id, slack_id, title):

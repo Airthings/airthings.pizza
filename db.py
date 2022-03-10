@@ -56,11 +56,11 @@ def get_users_to_invite(number_of_users_to_invite, event_id, total_number_of_emp
             return [x[0] for x in rows]
 
 
-def save_image(cloudinary_id, slack_id, title):
+'''def save_image(cloudinary_id, slack_id, title):
     sql = "INSERT INTO images (cloudinary_id, uploaded_by, title) VALUES (%s, %s, %s);"
     with pizza_conn:
         with pizza_conn.cursor() as curs:
-            curs.execute(sql, (cloudinary_id, slack_id, title))
+            curs.execute(sql, (cloudinary_id, slack_id, title))'''
 
 
 def save_invitations(slack_ids, event_id):

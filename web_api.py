@@ -28,16 +28,16 @@ def button_rsvp(user_id, rsvp, original_message, response_url):
         if(rsvp == "attending"):
             api.finalize_event_if_complete()
             response_JSON = response_message(
-                original_message, "✅ Sweet! Det blir sykt nice! 😋")
+                original_message, "✅ Amazing! 😋")
             requests.post(response_url, response_JSON)
         elif (rsvp == "not attending"):
             api.invite_if_needed()
             response_JSON = response_message(
-                original_message, "⛔️ Ah, ok. Neste gang! 🤝")
+                original_message, "⛔️ Oh no. Maybe next time! 🤝")
             requests.post(response_url, response_JSON)
     else:
         response_JSON = response_message(
-            original_message, "💣 Hmm, hva har du gjort for noe rart nå?")
+            original_message, "💣 Hmm, what did you do now?")
         requests.post(response_url, response_JSON)
 
 
