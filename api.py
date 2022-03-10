@@ -91,16 +91,11 @@ def auto_reply():
         slack.send_slack_message(user_id, "Ok, I assume you are not available. Hope you can join next time! 🤞")
         print("%s didn't answer. Setting RSVP to not attending.")
 
-def save_image(cloudinary_id, slack_id, title):
-    db.save_image(cloudinary_id, slack_id, title)
-
 def rsvp(slack_id, answer):
     db.rsvp(slack_id, answer)
 
-
 def send_slack_message(channel_id, text, attachments=None, thread_ts=None):
     return slack.send_slack_message(channel_id, text, attachments, thread_ts)
-
 
 def get_invited_users():
     return db.get_invited_users()
