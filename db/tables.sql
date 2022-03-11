@@ -24,10 +24,4 @@ CREATE TABLE invitations (
   rsvp RSVP NOT NULL DEFAULT 'unanswered',
   PRIMARY KEY (event_id, slack_id)
 );
-/*
-CREATE TABLE images (
-  cloudinary_id TEXT PRIMARY KEY,
-  uploaded_by TEXT REFERENCES slack_users (slack_id),
-  uploaded_at TIMESTAMP DEFAULT NOW(),
-  title TEXT
-); */
+
